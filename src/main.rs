@@ -4,6 +4,9 @@ extern crate clap;
 use anyhow::Context;
 use anyhow::Result as AResult;
 use clap::Parser;
+use day2::Day2;
+
+use crate::day1::Day1;
 
 mod day1;
 mod day2;
@@ -12,10 +15,18 @@ trait DayTask {
     const NAME: &'static str;
     type Out;
 
+    fn input_file() -> std::io::Result<std::fs::File> {
+        std::fs::File::open(format!("./inputs/{}.txt", Self::NAME))
+    }
+
+    fn test_file() -> std::io::Result<std::fs::File> {
+        std::fs::File::open(format!("./inputs/{}.test.txt", Self::NAME))
+    }
+
     fn run(task: Task) -> AResult<Self::Out> {
         match task {
-            Task::A => Self::run_a(),
-            Task::B => Self::run_b(),
+            Task::A => Self::run_a().with_context(|| format!("Running Task A for {}", Self::NAME)),
+            Task::B => Self::run_b().with_context(|| format!("Running Task B for {}", Self::NAME)),
         }
     }
 
@@ -51,8 +62,10 @@ enum Task {
 fn main() -> AResult<()> {
     let app = App::parse();
 
-    let result = match app.day {
-        Day::One { task } => unimplemented!(),
-        Day::Two { task } => unimplemented!(),
+    match app.day {
+        Day::One { task } => println!("Result: {}", Day1::run(task)?),
+        Day::Two { task } => println!("Result: {}", Day2::run(task)?),
     };
+
+    Ok(())
 }
