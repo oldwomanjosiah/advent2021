@@ -1,37 +1,41 @@
+use anyhow::Result as AResult;
 use std::io::{stdin, BufRead};
 
-pub fn run() -> Result<i32, std::io::Error> {
-    let lines: Result<Vec<String>, std::io::Error> = stdin().lock().lines().collect();
+pub struct Day1;
 
-    lines.map(|lines| {
-        let values: Vec<i32> = lines
-            .iter()
-            .map(|v| v.parse::<i32>().expect("Could not parse depth as i32"))
-            .collect();
+impl DayTask for Day1 {
+    type Out = i32;
 
-        values
+    fn run_a() -> AResult<i32> {
+        let lines: Vec<String> = stdin()
+            .lock()
+            .lines()
+            .collect::<Result<_, std::io::Error>>()
+            .context("Reading Lines")?;
+
+        let values: Vec<i32> = lines.iter().map(|v| v.parse::<i32>()?).collect();
+
+        Ok(values
             .windows(2)
             .map(|v| v[0] < v[1])
             .filter(|&v| v)
-            .count() as i32
-    })
-}
+            .count() as i32)
+    }
+    fn run_b() -> AResult<i32> {
+        let lines: Vec<String> = stdin()
+            .lock()
+            .lines()
+            .collect::<Result<_, std::io::Error>>()
+            .context("Reading Lines")?;
 
-pub fn run_part2() -> Result<i32, std::io::Error> {
-    let lines: Result<Vec<String>, std::io::Error> = stdin().lock().lines().collect();
-
-    lines.map(|lines| {
-        let values: Vec<i32> = lines
-            .iter()
-            .map(|v| v.parse().expect("Could not parse depth as i32"))
-            .collect();
+        let values: Vec<i32> = lines.iter().map(|v| v.parse()?).collect();
 
         let windowed: Vec<i32> = values.windows(3).map(|b| b.iter().sum()).collect();
 
-        windowed
+        Ok(windowed
             .windows(2)
             .map(|v| v[0] < v[1])
             .filter(|&v| v)
-            .count() as i32
-    })
+            .count() as i32)
+    }
 }
