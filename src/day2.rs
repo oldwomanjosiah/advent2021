@@ -9,8 +9,7 @@ impl DayTask for Day2 {
     type Out = i32;
 
     fn run_a() -> anyhow::Result<Self::Out> {
-        let lines: Vec<String> = stdin()
-            .lock()
+        let lines: Vec<String> = Self::input_file()?
             .lines()
             .collect::<Result<_, std::io::Error>>()?;
 
@@ -55,8 +54,7 @@ impl DayTask for Day2 {
     }
 
     fn run_b() -> anyhow::Result<Self::Out> {
-        let lines: Vec<String> = stdin()
-            .lock()
+        let lines: Vec<String> = Self::input_file()?
             .lines()
             .collect::<Result<_, std::io::Error>>()?;
 

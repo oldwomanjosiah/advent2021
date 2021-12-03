@@ -15,12 +15,14 @@ trait DayTask {
     const NAME: &'static str;
     type Out;
 
-    fn input_file() -> std::io::Result<std::fs::File> {
+    fn input_file() -> std::io::Result<std::io::BufReader<std::fs::File>> {
         std::fs::File::open(format!("./inputs/{}.txt", Self::NAME))
+            .map(|it| std::io::BufReader::new(it))
     }
 
-    fn test_file() -> std::io::Result<std::fs::File> {
+    fn test_file() -> std::io::Result<std::io::BufReader<std::fs::File>> {
         std::fs::File::open(format!("./inputs/{}.test.txt", Self::NAME))
+            .map(|it| std::io::BufReader::new(it))
     }
 
     fn run(task: Task) -> AResult<Self::Out> {
