@@ -7,9 +7,11 @@ use clap::Parser;
 use day2::Day2;
 
 use crate::day1::Day1;
+use crate::day3::Day3;
 
 mod day1;
 mod day2;
+mod day3;
 
 trait DayTask {
     const NAME: &'static str;
@@ -53,6 +55,11 @@ enum Day {
         #[clap(subcommand)]
         task: Task,
     },
+
+    Three {
+        #[clap(subcommand)]
+        task: Task,
+    },
 }
 
 #[derive(Parser)]
@@ -67,6 +74,10 @@ fn main() -> AResult<()> {
     match app.day {
         Day::One { task } => println!("Result: {}", Day1::run(task)?),
         Day::Two { task } => println!("Result: {}", Day2::run(task)?),
+        Day::Three { task } => {
+            let (gamma, epsilon) = Day3::run(task)?;
+            println!("Result: {:b}, {:b} : {}", gamma, epsilon, gamma * epsilon);
+        }
     };
 
     Ok(())

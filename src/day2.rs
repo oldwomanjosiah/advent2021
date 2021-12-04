@@ -4,6 +4,7 @@ use crate::DayTask;
 
 pub struct Day2;
 
+// TODO(Josiah) Rewrite to be able to return parse errors (instead of panicing) using try_fold
 impl DayTask for Day2 {
     const NAME: &'static str = "day2";
     type Out = i32;
