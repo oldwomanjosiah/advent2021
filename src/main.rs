@@ -31,9 +31,9 @@ trait DayTask {
 
     fn run(task: Task, test: bool) -> AResult<Self::Out> {
         let lines = if test {
-            Self::test_file().context("Getting Test File")?
+            Self::test_file().with_context(|| format!("Getting Test File for {}", Self::NAME))?
         } else {
-            Self::input_file().context("Getting Input File")?
+            Self::input_file().with_context(|| format!("Getting Input File for {}", Self::NAME))?
         }
         .lines()
         .collect::<Result<_, _>>()
@@ -55,31 +55,27 @@ trait DayTask {
 
 #[derive(Parser)]
 struct App {
+    /// Use Test Input
     #[clap(short, long)]
     test: bool,
-    #[clap(subcommand)]
+
+    /// Which Day would you like to run?
+    #[clap(arg_enum)]
     day: Day,
+
+    /// Which Task Would you Like to Run?
+    #[clap(arg_enum, default_value = "a")]
+    task: Task,
 }
 
-#[derive(Parser)]
+#[derive(Debug, Clone, Copy, clap::ArgEnum)]
 enum Day {
-    One {
-        #[clap(subcommand)]
-        task: Task,
-    },
-
-    Two {
-        #[clap(subcommand)]
-        task: Task,
-    },
-
-    Three {
-        #[clap(subcommand)]
-        task: Task,
-    },
+    One,
+    Two,
+    Three,
 }
 
-#[derive(Parser)]
+#[derive(Debug, Clone, Copy, clap::ArgEnum)]
 enum Task {
     A,
     B,
@@ -89,10 +85,10 @@ fn main() -> AResult<()> {
     let app = App::parse();
 
     match app.day {
-        Day::One { task } => println!("Result: {}", Day1::run(task, app.test)?),
-        Day::Two { task } => println!("Result: {}", Day2::run(task, app.test)?),
-        Day::Three { task } => {
-            let (gamma, epsilon) = Day3::run(task, app.test)?;
+        Day::One => println!("Result: {}", Day1::run(app.task, app.test)?),
+        Day::Two => println!("Result: {}", Day2::run(app.task, app.test)?),
+        Day::Three => {
+            let (gamma, epsilon) = Day3::run(app.task, app.test)?;
             println!("Result: {:b}, {:b} : {}", gamma, epsilon, gamma * epsilon);
         }
     };
