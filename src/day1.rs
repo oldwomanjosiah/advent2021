@@ -1,6 +1,6 @@
 use super::DayTask;
-use anyhow::{Context, Result as AResult};
-use std::io::{stdin, BufRead};
+use anyhow::{Result as AResult};
+
 
 pub struct Day1;
 

@@ -1,5 +1,3 @@
-use std::io::{stdin, BufRead};
-
 use crate::DayTask;
 
 pub struct Day2;

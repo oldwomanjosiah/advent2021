@@ -43,7 +43,7 @@ impl DayTask for Day3 {
         Ok((gamma, epsilon))
     }
 
-    fn run_b(lines: Vec<String>) -> AResult<Self::Out> {
+    fn run_b(_lines: Vec<String>) -> AResult<Self::Out> {
         todo!()
     }
 }
