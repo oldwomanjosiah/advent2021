@@ -9,11 +9,7 @@ impl DayTask for Day2 {
     const NAME: &'static str = "day2";
     type Out = i32;
 
-    fn run_a() -> anyhow::Result<Self::Out> {
-        let lines: Vec<String> = Self::input_file()?
-            .lines()
-            .collect::<Result<_, std::io::Error>>()?;
-
+    fn run_a(lines: Vec<String>) -> anyhow::Result<Self::Out> {
         let (vert, hor) = lines
             .iter()
             .map(|l| {
@@ -54,11 +50,7 @@ impl DayTask for Day2 {
         Ok(vert * hor)
     }
 
-    fn run_b() -> anyhow::Result<Self::Out> {
-        let lines: Vec<String> = Self::input_file()?
-            .lines()
-            .collect::<Result<_, std::io::Error>>()?;
-
+    fn run_b(lines: Vec<String>) -> anyhow::Result<Self::Out> {
         let (_, vert, hor) = lines
             .iter()
             .map(|l| {

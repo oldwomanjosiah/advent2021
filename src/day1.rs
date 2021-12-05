@@ -8,12 +8,7 @@ impl DayTask for Day1 {
     const NAME: &'static str = "day1";
     type Out = i32;
 
-    fn run_a() -> AResult<i32> {
-        let lines: Vec<String> = Self::input_file()?
-            .lines()
-            .collect::<Result<_, std::io::Error>>()
-            .context("Reading Lines")?;
-
+    fn run_a(lines: Vec<String>) -> AResult<i32> {
         let values: Vec<i32> = lines
             .iter()
             .map(|v| v.parse::<i32>())
@@ -25,12 +20,7 @@ impl DayTask for Day1 {
             .filter(|&v| v)
             .count() as i32)
     }
-    fn run_b() -> AResult<i32> {
-        let lines: Vec<String> = Self::input_file()?
-            .lines()
-            .collect::<Result<_, std::io::Error>>()
-            .context("Reading Lines")?;
-
+    fn run_b(lines: Vec<String>) -> AResult<i32> {
         let values: Vec<i32> = lines
             .iter()
             .map(|v| v.parse::<i32>())

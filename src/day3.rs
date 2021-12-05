@@ -1,5 +1,3 @@
-use std::io::BufRead;
-
 use super::DayTask;
 use anyhow::Context;
 use anyhow::Result as AResult;
@@ -10,9 +8,7 @@ impl DayTask for Day3 {
     type Out = (u64, u64);
     const NAME: &'static str = "day3";
 
-    fn run_a() -> AResult<Self::Out> {
-        let lines: Vec<String> = Self::input_file()?.lines().collect::<Result<_, _>>()?;
-
+    fn run_a(lines: Vec<String>) -> AResult<Self::Out> {
         let cutoff = lines.len();
         let len = lines.get(0).context("There was no input")?.len();
 
@@ -47,7 +43,7 @@ impl DayTask for Day3 {
         Ok((gamma, epsilon))
     }
 
-    fn run_b() -> AResult<Self::Out> {
+    fn run_b(lines: Vec<String>) -> AResult<Self::Out> {
         todo!()
     }
 }
